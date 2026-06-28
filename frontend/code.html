@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AutomationPro | Precision Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-secondary-fixed": "#0c1c30",
+                        "tertiary-fixed-dim": "#ffb695",
+                        "surface-tint": "#544fc0",
+                        "surface-bright": "#fcf8ff",
+                        "on-primary-container": "#8b87fb",
+                        "on-tertiary-fixed-variant": "#733515",
+                        "surface-container-highest": "#e4e1eb",
+                        "inverse-surface": "#303037",
+                        "on-tertiary-fixed": "#351000",
+                        "on-surface": "#1b1b22",
+                        "on-secondary-fixed-variant": "#39485e",
+                        "primary-fixed": "#e2dfff",
+                        "tertiary-fixed": "#ffdbcc",
+                        "surface-dim": "#dcd8e3",
+                        "on-error": "#ffffff",
+                        "on-surface-variant": "#464553",
+                        "on-primary": "#ffffff",
+                        "tertiary": "#300d00",
+                        "outline-variant": "#c8c4d5",
+                        "on-secondary": "#ffffff",
+                        "inverse-primary": "#c3c0ff",
+                        "surface-variant": "#e4e1eb",
+                        "surface-muted": "#f0ecf6",
+                        "surface-container-high": "#eae6f1",
+                        "terminal-header": "#0f172a",
+                        "primary": "#0d0060",
+                        "terminal-bg": "#020617",
+                        "error-rose": "#f43f5e",
+                        "success-green": "#10b981",
+                        "warning-amber": "#fbbf24",
+                        "on-primary-fixed-variant": "#3b35a7",
+                        "surface": "#fcf8ff",
+                        "inverse-on-surface": "#f3eff9",
+                        "surface-container": "#f0ecf6",
+                        "surface-container-lowest": "#ffffff",
+                        "primary-container": "#1f108e",
+                        "secondary-fixed-dim": "#b8c7e2",
+                        "on-secondary-container": "#56657c",
+                        "background": "#f8fafc",
+                        "on-tertiary": "#ffffff",
+                        "error": "#ba1a1a",
+                        "on-primary-fixed": "#0f0069",
+                        "surface-container-low": "#f6f2fc",
+                        "secondary-container": "#d4e3ff",
+                        "on-background": "#1b1b22",
+                        "tertiary-container": "#511c00",
+                        "secondary": "#505f76",
+                        "outline": "#e2e8f0",
+                        "on-error-container": "#93000a",
+                        "secondary-fixed": "#d4e3ff",
+                        "on-tertiary-container": "#d0805a",
+                        "error-container": "#ffdad6",
+                        "primary-fixed-dim": "#c3c0ff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "4px",
+                        "lg": "6px",
+                        "xl": "8px",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-lg": "32px",
+                        "margin": "32px",
+                        "stack-md": "16px",
+                        "unit": "4px",
+                        "stack-sm": "8px",
+                        "gutter": "24px",
+                        "container-max": "1440px"
+                    },
+                    "fontFamily": {
+                        "code-sm": ["JetBrains Mono"],
+                        "label-caps": ["Inter"],
+                        "body-md": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "display-lg": ["Inter"],
+                        "title-sm": ["Inter"]
+                    },
+                    "fontSize": {
+                        "code-sm": ["13px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "label-caps": ["11px", {"lineHeight": "12px", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                        "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "body-sm": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "display-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "title-sm": ["16px", {"lineHeight": "24px", "fontWeight": "600"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 20;
+            vertical-align: middle;
+        }
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #e2e8f0;
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #cbd5e1;
+        }
+        .terminal-glow {
+            text-shadow: 0 0 10px rgba(16, 185, 129, 0.1);
+        }
+        .donut-chart {
+            stroke-dasharray: 251.32; /* 2 * PI * 40 */
+            transition: stroke-dashoffset 1s ease-out;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md min-h-screen">
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-0 h-full w-[240px] bg-white border-r border-outline flex flex-col z-50">
+<div class="px-6 h-16 flex items-center border-b border-outline">
+<div class="flex items-center gap-2">
+<div class="w-8 h-8 bg-primary rounded flex items-center justify-center">
+<span class="material-symbols-outlined text-white text-[20px]" style="font-variation-settings: 'FILL' 1;">analytics</span>
+</div>
+<div>
+<h1 class="text-sm font-bold text-on-background leading-none">AutomationPro</h1>
+<span class="text-[10px] text-on-surface-variant font-medium uppercase tracking-tighter">Precision QA</span>
+</div>
+</div>
+</div>
+<nav class="flex-1 py-6 px-3 space-y-1">
+<p class="px-3 pb-2 text-[10px] font-bold text-on-surface-variant uppercase tracking-widest">Main Menu</p>
+<a class="flex items-center gap-3 px-3 py-2 text-primary font-semibold bg-primary/5 rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined text-[20px]">dashboard</span>
+<span class="text-body-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-slate-50 hover:text-on-surface rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined text-[20px]">history</span>
+<span class="text-body-md">Test History</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-slate-50 hover:text-on-surface rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined text-[20px]">account_tree</span>
+<span class="text-body-md">Workflows</span>
+</a>
+<p class="px-3 pt-6 pb-2 text-[10px] font-bold text-on-surface-variant uppercase tracking-widest">Management</p>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-slate-50 hover:text-on-surface rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined text-[20px]">settings_input_component</span>
+<span class="text-body-md">Config</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-slate-50 hover:text-on-surface rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined text-[20px]">groups</span>
+<span class="text-body-md">Team</span>
+</a>
+</nav>
+<div class="p-4 border-t border-outline">
+<div class="bg-slate-50 rounded-lg p-3">
+<p class="text-[11px] font-semibold text-on-surface mb-1">Infrastructure</p>
+<div class="flex items-center justify-between text-[10px] text-on-surface-variant">
+<span>Cluster Status</span>
+<span class="flex items-center gap-1 text-success-green">
+<span class="w-1.5 h-1.5 rounded-full bg-success-green"></span>
+                        Healthy
+                    </span>
+</div>
+</div>
+</div>
+</aside>
+<!-- TopNavBar -->
+<header class="fixed top-0 left-[240px] right-0 h-16 bg-white border-b border-outline flex justify-between items-center px-margin z-40">
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-2 text-on-surface-variant text-sm font-medium">
+<span class="hover:text-on-surface cursor-pointer">Projects</span>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+<span class="text-on-surface">Automation Dashboard</span>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative hidden md:block">
+<span class="absolute inset-y-0 left-3 flex items-center text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]">search</span>
+</span>
+<input class="pl-10 pr-4 py-1.5 bg-slate-50 border border-outline rounded-lg text-sm w-[240px] focus:outline-none focus:ring-2 focus:ring-primary/20" placeholder="Search tests..." type="text"/>
+</div>
+<div class="h-8 w-px bg-outline mx-2"></div>
+<button class="text-on-surface-variant hover:text-on-surface relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-0 right-0 w-2 h-2 bg-error-rose border-2 border-white rounded-full"></span>
+</button>
+<div class="flex items-center gap-3 pl-2">
+<div class="text-right hidden lg:block leading-none">
+<p class="text-sm font-bold">QA Operator</p>
+<p class="text-[10px] text-on-surface-variant">Local Runner</p>
+</div>
+<div class="w-9 h-9 rounded-full bg-primary text-white overflow-hidden ring-1 ring-outline grid place-items-center text-xs font-bold">
+QA
+</div>
+</div>
+</div>
+</header>
+<!-- Main Content -->
+<main class="ml-[240px] pt-16 min-h-screen">
+<div class="max-w-container-max mx-auto p-margin">
+<!-- Header Section -->
+<div class="flex flex-col lg:flex-row lg:items-end justify-between mb-8 gap-4">
+<div>
+<h2 class="text-display-lg font-bold text-slate-900 mb-1">Quality Assurance Control</h2>
+<p class="text-on-surface-variant text-body-md">Real-time execution orchestration and telemetry visualization.</p>
+</div>
+<div class="flex gap-3">
+<button id="export-report" class="bg-white border border-outline px-4 py-2 rounded-lg text-sm font-bold hover:bg-slate-50 transition-all flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">download</span>
+                        Export Report
+                    </button>
+<button id="launch-execution" class="bg-primary text-white px-6 py-2 rounded-lg text-sm font-bold shadow-lg shadow-primary/20 hover:opacity-90 transition-all flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+                        Launch Execution
+                    </button>
+</div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+<!-- Configuration Card -->
+<div class="lg:col-span-12 bg-white border border-outline rounded-xl overflow-hidden shadow-sm">
+<div class="bg-slate-50/50 border-b border-outline px-6 py-4 flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">settings</span>
+<h3 class="text-sm font-bold uppercase tracking-wider text-on-surface">Execution Parameters</h3>
+</div>
+<div class="flex gap-4">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-success-green"></span>
+<span id="runner-status" class="text-[11px] font-bold text-on-surface-variant uppercase">Status: Ready</span>
+</div>
+</div>
+</div>
+<div class="p-6 grid grid-cols-1 lg:grid-cols-4 gap-gutter">
+<div class="lg:col-span-2 space-y-4">
+<div>
+<label class="block text-[11px] font-bold text-on-surface-variant uppercase mb-2">Target Endpoint</label>
+<div class="relative">
+<span class="absolute inset-y-0 left-3 flex items-center text-on-surface-variant">
+<span class="material-symbols-outlined text-[20px]">language</span>
+</span>
+<input id="target-url" class="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-outline focus:border-primary focus:ring-1 focus:ring-primary outline-none rounded-lg text-sm transition-all" type="url" value=""/>
+</div>
+</div>
+<div>
+<label class="block text-[11px] font-bold text-on-surface-variant uppercase mb-3">Module Selection</label>
+<div class="flex flex-wrap gap-2">
+<label class="flex items-center gap-2 px-3 py-1.5 border border-outline bg-slate-50 rounded-lg cursor-pointer hover:border-primary/50 transition-colors">
+<input class="module-checkbox w-3.5 h-3.5 rounded text-primary border-slate-300 focus:ring-primary/20" type="checkbox" value="smoke" checked=""/>
+<span class="text-xs font-medium">Smoke Test</span>
+</label>
+<label class="flex items-center gap-2 px-3 py-1.5 border border-primary bg-primary/5 rounded-lg cursor-pointer transition-colors">
+<input checked="" class="module-checkbox w-3.5 h-3.5 rounded text-primary border-primary focus:ring-primary/20" type="checkbox" value="visual"/>
+<span class="text-xs font-bold text-primary">Visual Blank Screen</span>
+</label>
+<label class="flex items-center gap-2 px-3 py-1.5 border border-outline bg-slate-50 rounded-lg cursor-pointer hover:border-primary/50 transition-colors">
+<input class="module-checkbox w-3.5 h-3.5 rounded text-primary border-slate-300 focus:ring-primary/20" type="checkbox" value="console"/>
+<span class="text-xs font-medium">Console Scan</span>
+</label>
+<label class="flex items-center gap-2 px-3 py-1.5 border border-primary bg-primary/5 rounded-lg cursor-pointer transition-colors">
+<input checked="" class="module-checkbox w-3.5 h-3.5 rounded text-primary border-primary focus:ring-primary/20" type="checkbox" value="q2_replay"/>
+<span class="text-xs font-bold text-primary">HMAC Replay</span>
+</label>
+<label class="flex items-center gap-2 px-3 py-1.5 border border-primary bg-primary/5 rounded-lg cursor-pointer transition-colors">
+<input checked="" class="module-checkbox w-3.5 h-3.5 rounded text-primary border-primary focus:ring-primary/20" type="checkbox" value="q1_canvas"/>
+<span class="text-xs font-bold text-primary">Canvas/WebSocket</span>
+</label>
+<label class="flex items-center gap-2 px-3 py-1.5 border border-primary bg-primary/5 rounded-lg cursor-pointer transition-colors">
+<input checked="" class="module-checkbox w-3.5 h-3.5 rounded text-primary border-primary focus:ring-primary/20" type="checkbox" value="q3_shadow"/>
+<span class="text-xs font-bold text-primary">Shadow DOM</span>
+</label>
+<label class="flex items-center gap-2 px-3 py-1.5 border border-outline bg-slate-50 rounded-lg cursor-pointer hover:border-primary/50 transition-colors">
+<input class="module-checkbox w-3.5 h-3.5 rounded text-primary border-slate-300 focus:ring-primary/20" type="checkbox" value="cloud_backend"/>
+<span class="text-xs font-medium">Cloud Command</span>
+</label>
+</div>
+</div>
+</div>
+<div class="space-y-4">
+<div>
+<label class="block text-[11px] font-bold text-on-surface-variant uppercase mb-2">Environment</label>
+<select class="w-full py-2.5 px-3 bg-slate-50 border border-outline rounded-lg text-sm focus:outline-none focus:border-primary">
+<option>Local Harness + Target URL</option>
+<option>Staging (Canary)</option>
+<option>QA Sandbox</option>
+</select>
+</div>
+<div>
+<label class="block text-[11px] font-bold text-on-surface-variant uppercase mb-2">Runtime Agent</label>
+<select class="w-full py-2.5 px-3 bg-slate-50 border border-outline rounded-lg text-sm focus:outline-none focus:border-primary">
+<option>Installed Chrome / Chromium</option>
+<option>WebKit (Safari Emulation)</option>
+<option>Firefox Geckodriver</option>
+</select>
+</div>
+</div>
+<div class="flex flex-col justify-center border-l border-outline pl-gutter">
+<div class="bg-primary/5 p-4 rounded-xl border border-primary/10 text-center">
+<p class="text-[10px] font-bold text-primary uppercase mb-1">Queue Priority</p>
+<p class="text-xl font-bold text-on-surface">Controlled</p>
+<div class="mt-4 pt-4 border-t border-primary/10 flex justify-between text-[10px]">
+<span class="text-on-surface-variant">Est. Compute Cost</span>
+<span class="font-bold text-on-surface">Local CPU</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Execution Feed & Summary -->
+<div class="lg:col-span-8 space-y-gutter">
+<!-- Live Log Terminal -->
+<div class="bg-terminal-bg rounded-xl border border-slate-800 shadow-2xl flex flex-col h-[520px] overflow-hidden">
+<div class="bg-slate-900/80 backdrop-blur px-4 h-11 flex justify-between items-center border-b border-slate-800">
+<div class="flex items-center gap-3">
+<div class="flex gap-1.5">
+<div class="w-2.5 h-2.5 rounded-full bg-error-rose/40"></div>
+<div class="w-2.5 h-2.5 rounded-full bg-warning-amber/40"></div>
+<div class="w-2.5 h-2.5 rounded-full bg-success-green/40"></div>
+</div>
+<span class="h-4 w-[1px] bg-slate-700 ml-1"></span>
+<span class="font-code-sm text-xs text-slate-400">fastapi/playwright — live_runner.log</span>
+</div>
+<div class="flex items-center gap-4">
+<span class="flex items-center gap-2">
+<span class="w-1.5 h-1.5 rounded-full bg-success-green animate-pulse"></span>
+<span class="text-[10px] font-bold text-success-green tracking-widest uppercase">LIVE STREAM</span>
+</span>
+<span class="material-symbols-outlined text-slate-400 text-sm cursor-pointer hover:text-white">content_copy</span>
+</div>
+</div>
+<div class="flex-1 overflow-y-auto p-4 font-code-sm text-[13px] terminal-glow bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]" id="terminal-scroll">
+<div class="space-y-1.5 text-slate-300">
+<p><span class="text-slate-500">[14:45:01]</span> <span class="bg-indigo-500/10 text-indigo-400 px-1 rounded font-bold text-[10px]">SYSTEM</span> Initializing distributed test cluster...</p>
+<p><span class="text-slate-500">[14:45:03]</span> <span class="bg-slate-500/10 text-slate-400 px-1 rounded font-bold text-[10px]">INFO</span> Nodes provisioned: 12/12 active</p>
+<p><span class="text-slate-500">[14:45:05]</span> <span class="bg-success-green/10 text-success-green px-1 rounded font-bold text-[10px]">SUCCESS</span> Tunnel established via us-east-1</p>
+<p><span class="text-slate-500">[14:45:08]</span> <span class="bg-indigo-500/10 text-indigo-400 px-1 rounded font-bold text-[10px]">SYSTEM</span> Injecting test payloads into module security_audit</p>
+<p><span class="text-slate-500">[14:45:10]</span> <span class="bg-warning-amber/10 text-warning-amber px-1 rounded font-bold text-[10px]">WARN</span> Potential XSS vulnerability detected in /api/v1/search</p>
+<p><span class="text-slate-500">[14:45:12]</span> <span class="bg-slate-500/10 text-slate-400 px-1 rounded font-bold text-[10px]">INFO</span> Profiling main thread concurrency...</p>
+<p class="text-slate-600">--------------------------------------------------------------------------------</p>
+<p><span class="text-slate-500">[14:45:15]</span> <span class="bg-success-green/10 text-success-green px-1 rounded font-bold text-[10px]">SUCCESS</span> Captured DOM snapshot at event "page_load_complete"</p>
+<p><span class="text-slate-500">[14:45:18]</span> <span class="bg-indigo-500/10 text-indigo-400 px-1 rounded font-bold text-[10px]">SYSTEM</span> Validating SSL/TLS certificates...</p>
+<p class="flex items-center gap-2">
+<span class="w-1 h-3.5 bg-indigo-500 animate-[pulse_0.8s_infinite]"></span>
+<span class="text-slate-500 italic text-[12px]">Streaming telemetry data packets...</span>
+</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Metrics & Summary Sidebar -->
+<div class="lg:col-span-4 space-y-gutter">
+<!-- Score Card -->
+<div class="bg-white border border-outline rounded-xl p-6 shadow-sm">
+<div class="flex justify-between items-start mb-6">
+<div>
+<h3 class="font-bold text-on-surface">Health Quotient</h3>
+<p class="text-[11px] text-on-surface-variant uppercase tracking-wider">Aggregated Result</p>
+</div>
+<div class="flex flex-col items-end">
+<span class="text-[10px] font-bold text-primary bg-primary/10 px-2 py-0.5 rounded-full">+1.2%</span>
+<span class="text-[9px] text-on-surface-variant mt-1">vs. Last Run</span>
+</div>
+</div>
+<div class="flex justify-center relative py-2">
+<svg class="w-36 h-36" viewbox="0 0 100 100">
+<circle class="text-slate-100" cx="50" cy="50" fill="transparent" r="40" stroke="currentColor" stroke-width="8"></circle>
+<circle class="text-primary donut-chart" cx="50" cy="50" fill="transparent" r="40" stroke="currentColor" stroke-dashoffset="37.7" stroke-linecap="round" stroke-width="8"></circle>
+</svg>
+<div class="absolute inset-0 flex flex-col items-center justify-center">
+<span id="score-value" class="text-3xl font-black text-on-surface leading-none">--<span class="text-lg font-bold opacity-40">%</span></span>
+<span id="score-label" class="text-[10px] font-bold text-on-surface-variant uppercase mt-1">Idle</span>
+</div>
+</div>
+<div class="mt-6 grid grid-cols-2 gap-4">
+<div class="p-3 bg-slate-50 border border-outline rounded-lg">
+<div class="flex items-center gap-2 mb-1">
+<span class="w-2 h-2 rounded-full bg-success-green"></span>
+<span class="text-[10px] font-bold text-on-surface-variant uppercase">Passed</span>
+</div>
+<p id="passed-count" class="text-xl font-bold">0</p>
+</div>
+<div class="p-3 bg-slate-50 border border-outline rounded-lg">
+<div class="flex items-center gap-2 mb-1">
+<span class="w-2 h-2 rounded-full bg-error-rose"></span>
+<span class="text-[10px] font-bold text-on-surface-variant uppercase">Failed</span>
+</div>
+<p id="failed-count" class="text-xl font-bold">0</p>
+</div>
+</div>
+</div>
+<!-- Performance Stats -->
+<div class="bg-white border border-outline rounded-xl divide-y divide-outline shadow-sm overflow-hidden">
+<div class="p-4 flex items-center justify-between hover:bg-slate-50 cursor-pointer transition-all">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 bg-slate-100 rounded flex items-center justify-center">
+<span class="material-symbols-outlined text-[18px] text-on-surface-variant">speed</span>
+</div>
+<div>
+<p class="text-[10px] font-bold text-on-surface-variant uppercase">Avg Response</p>
+<p id="avg-response" class="text-sm font-bold text-on-surface">-- ms</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant text-[16px]">chevron_right</span>
+</div>
+<div class="p-4 flex items-center justify-between hover:bg-slate-50 cursor-pointer transition-all">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 bg-slate-100 rounded flex items-center justify-center">
+<span class="material-symbols-outlined text-[18px] text-on-surface-variant">memory</span>
+</div>
+<div>
+<p class="text-[10px] font-bold text-on-surface-variant uppercase">Memory Usage</p>
+<p class="text-sm font-bold text-on-surface">Browser isolated</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant text-[16px]">chevron_right</span>
+</div>
+<div class="p-4 flex items-center justify-between hover:bg-slate-50 cursor-pointer transition-all">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 bg-slate-100 rounded flex items-center justify-center">
+<span class="material-symbols-outlined text-[18px] text-on-surface-variant">network_ping</span>
+</div>
+<div>
+<p class="text-[10px] font-bold text-on-surface-variant uppercase">Run ID</p>
+<p id="run-id-label" class="text-sm font-bold text-on-surface">No run yet</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant text-[16px]">chevron_right</span>
+</div>
+</div>
+<!-- Risk Level Indicator -->
+<div class="bg-indigo-600 rounded-xl p-6 text-white shadow-lg shadow-indigo-200">
+<div class="flex items-center gap-2 mb-4">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">verified_user</span>
+<span class="text-[11px] font-bold uppercase tracking-widest">Reliability Score</span>
+</div>
+<div class="flex items-baseline justify-between">
+<p id="risk-label" class="text-3xl font-bold">Idle</p>
+<div class="flex items-center gap-1 text-xs opacity-80">
+<span>Risk Level: </span>
+<span id="risk-level" class="font-bold">Unknown</span>
+</div>
+</div>
+<div class="mt-6 w-full bg-white/20 h-1.5 rounded-full overflow-hidden">
+<div class="bg-white h-full w-[94%]"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<script>
+        const logArea = document.getElementById('terminal-scroll');
+        const logContainer = logArea?.querySelector('.space-y-1\\.5');
+        const runButton = document.getElementById('launch-execution');
+        const exportButton = document.getElementById('export-report');
+        const targetInput = document.getElementById('target-url');
+        const statusLabel = document.getElementById('runner-status');
+        const scoreValue = document.getElementById('score-value');
+        const scoreLabel = document.getElementById('score-label');
+        const passedCount = document.getElementById('passed-count');
+        const failedCount = document.getElementById('failed-count');
+        const avgResponse = document.getElementById('avg-response');
+        const runIdLabel = document.getElementById('run-id-label');
+        const riskLabel = document.getElementById('risk-label');
+        const riskLevel = document.getElementById('risk-level');
+        let activeRun = null;
+        let lastRenderedLogCount = 0;
+        let lastRenderedFindingCount = 0;
+
+        function levelClass(level) {
+            if (level === 'SUCCESS') return 'bg-success-green/10 text-success-green';
+            if (level === 'WARN') return 'bg-warning-amber/10 text-warning-amber';
+            if (level === 'ERROR') return 'bg-error-rose/10 text-error-rose';
+            if (level === 'SYSTEM') return 'bg-indigo-500/10 text-indigo-400';
+            return 'bg-slate-500/10 text-slate-400';
+        }
+
+        function renderLog(entry) {
+            if (!logContainer) return;
+            const logEl = document.createElement('p');
+            logEl.innerHTML = `<span class="text-slate-500">[${entry.time}]</span> <span class="${levelClass(entry.level)} px-1 rounded font-bold text-[10px]">${entry.level}</span> ${entry.message}`;
+            logContainer.appendChild(logEl);
+            logArea.scrollTop = logArea.scrollHeight;
+        }
+
+        function resetTerminal() {
+            if (!logContainer) return;
+            logContainer.innerHTML = '';
+            lastRenderedLogCount = 0;
+            lastRenderedFindingCount = 0;
+            renderLog({ time: new Date().toLocaleTimeString([], { hour12: false }), level: 'SYSTEM', message: 'Waiting for FastAPI runner...' });
+        }
+
+        function selectedModules() {
+            return Array.from(document.querySelectorAll('.module-checkbox:checked')).map(input => input.value);
+        }
+
+        function updateSummary(run) {
+            activeRun = run;
+            statusLabel.textContent = `Status: ${run.status}`;
+            scoreValue.innerHTML = `${run.score ?? '--'}<span class="text-lg font-bold opacity-40">%</span>`;
+            scoreLabel.textContent = run.status === 'running' ? 'Running' : run.status;
+            passedCount.textContent = run.passed ?? 0;
+            failedCount.textContent = run.failed ?? 0;
+            avgResponse.textContent = `${run.avg_response_ms ?? 0} ms`;
+            runIdLabel.textContent = run.id ? `Run ${run.id}` : 'No run yet';
+            riskLabel.textContent = run.risk || 'Unknown';
+            riskLevel.textContent = run.risk || 'Unknown';
+            runButton.disabled = run.status === 'queued' || run.status === 'running';
+            runButton.classList.toggle('opacity-60', runButton.disabled);
+
+            for (const entry of (run.logs || []).slice(lastRenderedLogCount)) {
+                renderLog(entry);
+            }
+            lastRenderedLogCount = (run.logs || []).length;
+
+            for (const finding of (run.findings || []).slice(lastRenderedFindingCount)) {
+                renderLog({
+                    time: new Date().toLocaleTimeString([], { hour12: false }),
+                    level: finding.status === 'passed' ? 'SUCCESS' : 'WARN',
+                    message: `${finding.module}: ${finding.message}`
+                });
+            }
+            lastRenderedFindingCount = (run.findings || []).length;
+        }
+
+        async function pollRun(runId) {
+            while (true) {
+                const response = await fetch(`/api/runner/runs/${runId}`);
+                const run = await response.json();
+                updateSummary(run);
+                if (run.status !== 'queued' && run.status !== 'running') break;
+                await new Promise(resolve => setTimeout(resolve, 1200));
+            }
+        }
+
+        runButton?.addEventListener('click', async () => {
+            resetTerminal();
+            const modules = selectedModules();
+            if (!modules.length) {
+                renderLog({ time: new Date().toLocaleTimeString([], { hour12: false }), level: 'ERROR', message: 'Select at least one test module.' });
+                return;
+            }
+
+            statusLabel.textContent = 'Status: Starting';
+            runButton.disabled = true;
+            runButton.classList.add('opacity-60');
+            try {
+                const response = await fetch('/api/runner/runs', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ target_url: targetInput.value.trim(), modules })
+                });
+                if (!response.ok) throw new Error(await response.text());
+                const run = await response.json();
+                updateSummary(run);
+                await pollRun(run.id);
+            } catch (error) {
+                renderLog({ time: new Date().toLocaleTimeString([], { hour12: false }), level: 'ERROR', message: error.message });
+                statusLabel.textContent = 'Status: Failed';
+                runButton.disabled = false;
+                runButton.classList.remove('opacity-60');
+            }
+        });
+
+        exportButton?.addEventListener('click', () => {
+            if (!activeRun) return;
+            const blob = new Blob([JSON.stringify(activeRun, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `automation-report-${activeRun.id}.json`;
+            link.click();
+            URL.revokeObjectURL(url);
+        });
+
+        if (targetInput && !targetInput.value) {
+            targetInput.value = `${location.origin}/dashboard`;
+        }
+        resetTerminal();
+    </script>
+</body></html>
